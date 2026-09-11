@@ -1,0 +1,45 @@
+﻿{
+  "scopeName": "source.nexa",
+  "name": "Nexa",
+  "patterns": [
+    {
+      "name": "comment.line.nexa",
+      "match": "//.*$"
+    },
+    {
+      "name": "string.quoted.double.nexa",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.nexa",
+          "match": "\\\\."
+        }
+      ]
+    },
+    {
+      "name": "constant.numeric.nexa",
+      "match": "\\b(?:0[bB][01]+|\\d+(?:\\.\\d+)?)\\b"
+    },
+    {
+      "name": "constant.language.nexa",
+      "match": "\\b(?:true|false|null)\\b"
+    },
+    {
+      "name": "storage.type.nexa",
+      "match": "\\b(?:int|string|bool|void)\\b"
+    },
+    {
+      "name": "keyword.control.nexa",
+      "match": "\\b(?:if|else|while|for|function|return|break|continue)\\b"
+    },
+    {
+      "name": "support.function.nexa",
+      "match": "\\b(?:print|push|pop|length|int|str|window|clear|rect|circle|text|present|wait|key_down|close)\\b"
+    },
+    {
+      "name": "keyword.operator.nexa",
+      "match": "(?:===|!==|==|!=|<=|>=|&&|\\|\\||\\+|-|\\*|/|%|<|>|=|!|&|\\||\\^)"
+    }
+  ]
+}
