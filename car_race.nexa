@@ -1,0 +1,198 @@
+// ==========================================
+// Car Race – Nexa Racing Game
+// Steuerung: Pfeiltasten, Leertaste = Start
+// R = Neustart, ESC = Ende
+// ==========================================
+
+var W = 500;
+var H = 700;
+var LANES = [125, 225, 325];
+var SPEED = 4;
+var best = 0;
+
+var playing = 1;
+
+window("Car Race", W, H);
+
+while (playing == 1) {
+
+    // ---------- Reset fuer eine Runde ----------
+    var lane = 1;
+    var player_y = 600;
+    var e1_lane = 0;
+    var e1_y = -150;
+    var e2_lane = 1;
+    var e2_y = -350;
+    var e3_lane = 2;
+    var e3_y = -550;
+    var score = 0;
+    var game_over = 0;
+
+    // ---------- Startscreen ----------
+    clear("#1a1a1a");
+    text(W / 2 - 110, H / 2 - 60, "CAR RACE", 48, "yellow");
+    text(W / 2 - 140, H / 2 + 10, "Linke/Rechte Pfeiltaste", 20, "white");
+    text(W / 2 - 90, H / 2 + 50, "Start: Leertaste", 20, "#90a4ae");
+    present();
+
+    var started = 0;
+    while (started == 0) {
+        present();
+        if (key_down("space")) {
+            started = 1;
+        }
+        if (key_down("escape")) {
+            playing = 0;
+            started = 1;
+        }
+        sleep(30);
+    }
+
+    if (playing == 0) {
+        break;
+    }
+
+    // ---------- Hauptschleife ----------
+    while (game_over == 0) {
+
+        clear("#1b5e20");
+
+        // Strasse
+        rect(75, 0, 300, H, "#424242");
+        rect(75, 0, 6, H, "white");
+        rect(369, 0, 6, H, "white");
+
+        // Fahrbahn-Markierungen (gestrichelt)
+        var y_mark = 0;
+        while (y_mark < H) {
+            rect(173, y_mark, 6, 30, "#fdd835");
+            rect(321, y_mark, 6, 30, "#fdd835");
+            y_mark = y_mark + 60;
+        }
+
+        // ---------- Steuerung ----------
+        if (key_down("left")) {
+            lane = lane - 1;
+            if (lane < 0) {
+                lane = 0;
+            }
+            sleep(80);
+        }
+        if (key_down("right")) {
+            lane = lane + 1;
+            if (lane > 2) {
+                lane = 2;
+            }
+            sleep(80);
+        }
+        if (key_down("escape")) {
+            playing = 0;
+            game_over = 1;
+        }
+
+        // ---------- Gegner bewegen ----------
+        e1_y = e1_y + SPEED;
+        e2_y = e2_y + SPEED;
+        e3_y = e3_y + SPEED;
+
+        // Respawn + Score
+        if (e1_y > H + 60) {
+            e1_y = -120;
+            e1_lane = random(0, 2);
+            score = score + 1;
+        }
+        if (e2_y > H + 60) {
+            e2_y = -120;
+            e2_lane = random(0, 2);
+            score = score + 1;
+        }
+        if (e3_y > H + 60) {
+            e3_y = -120;
+            e3_lane = random(0, 2);
+            score = score + 1;
+        }
+
+        // ---------- Kollision ----------
+        var px = LANES[lane];
+        var hit = 0;
+
+        if (e1_lane == lane) {
+            if (player_y - 40 < e1_y + 40 && player_y + 40 > e1_y - 40) {
+                hit = 1;
+            }
+        }
+        if (e2_lane == lane) {
+            if (player_y - 40 < e2_y + 40 && player_y + 40 > e2_y - 40) {
+                hit = 1;
+            }
+        }
+        if (e3_lane == lane) {
+            if (player_y - 40 < e3_y + 40 && player_y + 40 > e3_y - 40) {
+                hit = 1;
+            }
+        }
+
+        if (hit == 1) {
+            game_over = 1;
+        }
+
+        // ---------- Gegner zeichnen ----------
+        rect(LANES[e1_lane] - 15, e1_y - 25, 30, 50, "#ef5350");
+        rect(LANES[e1_lane] - 10, e1_y - 32, 20, 8, "#b71c1c");
+        rect(LANES[e1_lane] - 5, e1_y + 25, 10, 8, "#b71c1c");
+
+        rect(LANES[e2_lane] - 15, e2_y - 25, 30, 50, "#ff9800");
+        rect(LANES[e2_lane] - 10, e2_y - 32, 20, 8, "#e65100");
+        rect(LANES[e2_lane] - 5, e2_y + 25, 10, 8, "#e65100");
+
+        rect(LANES[e3_lane] - 15, e3_y - 25, 30, 50, "#ab47bc");
+        rect(LANES[e3_lane] - 10, e3_y - 32, 20, 8, "#6a1b9a");
+        rect(LANES[e3_lane] - 5, e3_y + 25, 10, 8, "#6a1b9a");
+
+        // ---------- Spieler zeichnen ----------
+        rect(px - 15, player_y - 25, 30, 50, "#1e88e5");
+        rect(px - 10, player_y - 32, 20, 8, "#0d47a1");
+        rect(px - 5, player_y + 25, 10, 8, "#0d47a1");
+
+        // ---------- HUD ----------
+        rect(0, 0, W, 35, "#000000");
+        text(10, 7, "SCORE: " + score, 20, "yellow");
+
+        present();
+        sleep(16);
+    }
+
+    // ---------- Game Over (oder Abbruch) ----------
+    if (score > best) {
+        best = score;
+    }
+
+    if (playing == 1) {
+
+        clear("#1a1a1a");
+        rect(W / 2 - 170, H / 2 - 110, 340, 240, "#263238");
+        text(W / 2 - 120, H / 2 - 90, "GAME OVER", 42, "#ef5350");
+        text(W / 2 - 100, H / 2 - 30, "Score: " + score, 30, "white");
+        text(W / 2 - 100, H / 2 + 20, "Best: " + best, 26, "#64b5f6");
+        text(W / 2 - 130, H / 2 + 65, "R = Neustart, ESC = Ende", 18, "#90a4ae");
+        present();
+
+        var wieder = 0;
+        while (wieder == 0) {
+            present();
+            if (key_down("r")) {
+                wieder = 1;
+            }
+            if (key_down("escape")) {
+                playing = 0;
+                wieder = 1;
+            }
+            sleep(30);
+        }
+    }
+}
+
+clear("#1a1a1a");
+text(W / 2 - 80, H / 2 - 30, "Tschuess!", 36, "white");
+present();
+sleep(1000);

@@ -1,0 +1,27 @@
+// Klassen-Beispiel
+
+class Tier {
+    string name;
+
+    constructor(name) {
+        this.name = name;
+    }
+
+    method sprechen() {
+        return this.name + " macht Geräusche";
+    }
+}
+
+class Hund extends Tier {
+    constructor(name) {
+        this.name = name;
+    }
+
+    method bellen() {
+        return this.name + " bellt: Wau!";
+    }
+}
+
+var rex = new Hund("Rex");
+print(rex.sprechen());
+print(rex.bellen());

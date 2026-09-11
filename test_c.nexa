@@ -1,0 +1,118 @@
+// ==========================================
+// TEST: Neue C-Features
+// switch, enum, do-while, const, compound assignments, string builtins
+// ==========================================
+
+print("=== CONST ===");
+const PI = 3.14;
+const MAX = 100;
+print("PI = " + PI);
+print("MAX = " + MAX);
+
+// const kann nicht veraendert werden:
+// PI = 3.15;  // waere ein Fehler
+
+print("");
+print("=== ENUM ===");
+enum Farbe {
+    ROT,
+    GRUEN,
+    BLAU,
+    GELB
+}
+
+print("ROT = " + ROT);
+print("GRUEN = " + GRUEN);
+print("BLAU = " + BLAU);
+print("GELB = " + GELB);
+
+print("");
+print("=== SWITCH / CASE ===");
+var tag = 2;
+switch (tag) {
+    case 1:
+        print("Montag");
+        break;
+    case 2:
+        print("Dienstag");
+        break;
+    case 3:
+        print("Mittwoch");
+        break;
+    case 4:
+    case 5:
+        print("Ende der Woche");
+        break;
+    default:
+        print("Kein Tag");
+        break;
+}
+
+// switch mit expression
+var farbe = BLAU;
+switch (farbe) {
+    case ROT:
+        print("Farbe ist ROT");
+        break;
+    case GRUEN:
+        print("Farbe ist GRUEN");
+        break;
+    case BLAU:
+        print("Farbe ist BLAU");
+        break;
+    default:
+        print("Unbekannte Farbe");
+        break;
+}
+
+print("");
+print("=== DO ... WHILE ===");
+var zaehler = 0;
+do {
+    zaehler = zaehler + 1;
+    print("  Zaehler: " + zaehler);
+} while (zaehler < 5);
+print("Fertig: Zaehler = " + zaehler);
+
+print("");
+print("=== COMPOUND ASSIGNMENTS ===");
+var x = 10;
+x += 5;
+print("x += 5  -> " + x);
+x -= 3;
+print("x -= 3  -> " + x);
+x *= 2;
+print("x *= 2  -> " + x);
+x /= 4;
+print("x /= 4  -> " + x);
+x %= 3;
+print("x %%= 3  -> " + x);
+
+// Bit-Compound
+var bits = 12;  // 1100
+bits &= 10;     // 1100 & 1010 = 1000 = 8
+print("bits &= 10 -> " + bits);
+bits |= 5;      // 1000 | 0101 = 1101 = 13
+print("bits |= 5  -> " + bits);
+bits ^= 3;      // 1101 ^ 0011 = 1110 = 14
+print("bits ^= 3  -> " + bits);
+
+var shift = 4;
+shift <<= 3;
+print("shift <<= 3 -> " + shift);
+shift >>= 1;
+print("shift >>= 1 -> " + shift);
+
+print("");
+print("=== STRING BUILTINS ===");
+var s = "Hallo Welt!";
+print("substring: " + substring(s, 0, 5));
+print("charAt:    " + charAt(s, 5));
+print("indexOf:   " + indexOf(s, "Welt"));
+print("replace:   " + replace(s, "Welt", "Nexa"));
+print("uppercase: " + uppercase(s));
+print("lowercase: " + lowercase(s));
+print("trim:      '" + trim("  leer  ") + "'");
+
+print("");
+print("=== ALLES OK ===");

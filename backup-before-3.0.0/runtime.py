@@ -1,5 +1,4 @@
 import tkinter as tk
-import time
 
 
 class GameRuntime:
@@ -13,16 +12,16 @@ class GameRuntime:
 
     def window(self, title, width, height):
         if not isinstance(title, str):
-            raise RuntimeError("window() benötigt einen String als Titel.")
+            raise RuntimeError("window() ben?tigt einen String als Titel.")
 
         if not isinstance(width, int) or isinstance(width, bool):
-            raise RuntimeError("window() benötigt eine Ganzzahl für die Breite.")
+            raise RuntimeError("window() ben?tigt eine Ganzzahl f?r die Breite.")
 
         if not isinstance(height, int) or isinstance(height, bool):
-            raise RuntimeError("window() benötigt eine Ganzzahl für die Höhe.")
+            raise RuntimeError("window() ben?tigt eine Ganzzahl f?r die H?he.")
 
         if width <= 0 or height <= 0:
-            raise RuntimeError("Fenstergröße muss größer als 0 sein.")
+            raise RuntimeError("Fenstergr??e muss gr??er als 0 sein.")
 
         self.width = width
         self.height = height
@@ -76,7 +75,7 @@ class GameRuntime:
         self.require_window()
 
         if not isinstance(color, str):
-            raise RuntimeError("clear() benötigt eine Farbe als String.")
+            raise RuntimeError("clear() ben?tigt eine Farbe als String.")
 
         self.background = color
         self.canvas.configure(bg=color)
@@ -87,16 +86,14 @@ class GameRuntime:
 
         values = [x, y, width, height]
 
-        if not all(
-            isinstance(value, int) and not isinstance(value, bool)
-            for value in values
-        ):
+        if not all(isinstance(value, int) and not isinstance(value, bool)
+                   for value in values):
             raise RuntimeError(
-                "rect() benötigt x, y, width und height als Ganzzahlen."
+                "rect() ben?tigt x, y, width und height als Ganzzahlen."
             )
 
         if not isinstance(color, str):
-            raise RuntimeError("rect() benötigt eine Farbe als String.")
+            raise RuntimeError("rect() ben?tigt eine Farbe als String.")
 
         self.canvas.create_rectangle(
             x,
@@ -112,23 +109,17 @@ class GameRuntime:
 
         values = [x, y, radius]
 
-        if not all(
-            isinstance(value, int) and not isinstance(value, bool)
-            for value in values
-        ):
+        if not all(isinstance(value, int) and not isinstance(value, bool)
+                   for value in values):
             raise RuntimeError(
-                "circle() benötigt x, y und radius als Ganzzahlen."
+                "circle() ben?tigt x, y und radius als Ganzzahlen."
             )
 
         if radius < 0:
-            raise RuntimeError(
-                "circle() benötigt einen Radius >= 0."
-            )
+            raise RuntimeError("circle() ben?tigt einen Radius >= 0.")
 
         if not isinstance(color, str):
-            raise RuntimeError(
-                "circle() benötigt eine Farbe als String."
-            )
+            raise RuntimeError("circle() ben?tigt eine Farbe als String.")
 
         self.canvas.create_oval(
             x - radius,
@@ -143,21 +134,19 @@ class GameRuntime:
         self.require_window()
 
         if not isinstance(x, int) or isinstance(x, bool):
-            raise RuntimeError("text() benötigt x als Ganzzahl.")
+            raise RuntimeError("text() ben?tigt x als Ganzzahl.")
 
         if not isinstance(y, int) or isinstance(y, bool):
-            raise RuntimeError("text() benötigt y als Ganzzahl.")
+            raise RuntimeError("text() ben?tigt y als Ganzzahl.")
 
         if not isinstance(value, str):
             value = str(value)
 
         if not isinstance(size, int) or isinstance(size, bool):
-            raise RuntimeError("text() benötigt size als Ganzzahl.")
+            raise RuntimeError("text() ben?tigt size als Ganzzahl.")
 
         if not isinstance(color, str):
-            raise RuntimeError(
-                "text() benötigt eine Farbe als String."
-            )
+            raise RuntimeError("text() ben?tigt eine Farbe als String.")
 
         self.canvas.create_text(
             x,
@@ -178,9 +167,7 @@ class GameRuntime:
         self.require_window()
 
         if not isinstance(key, str):
-            raise RuntimeError(
-                "key_down() benötigt einen String."
-            )
+            raise RuntimeError("key_down() ben?tigt einen String.")
 
         return key.lower() in self.keys
 
@@ -188,23 +175,6 @@ class GameRuntime:
         self.require_window()
 
         self.root.mainloop()
-
-    def sleep(self, milliseconds):
-        if not isinstance(milliseconds, int) or isinstance(milliseconds, bool):
-            raise RuntimeError(
-                "sleep() benötigt eine Ganzzahl in Millisekunden."
-            )
-
-        if milliseconds < 0:
-            raise RuntimeError(
-                "sleep() benötigt einen Wert >= 0."
-            )
-
-        delay = milliseconds / 1000
-        end = time.time() + delay
-        while time.time() < end:
-            self.root.update()
-            time.sleep(0.01)
 
     def close(self):
         if self.root is not None:

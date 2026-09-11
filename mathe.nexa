@@ -1,0 +1,4 @@
+function verdopple(x) {
+    return x * 2;
+}
+print(verdopple(100000000000)); // 200000000000

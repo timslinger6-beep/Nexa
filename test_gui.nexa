@@ -1,0 +1,22 @@
+// GUI-Vorlage
+
+var W = 600;
+var H = 400;
+
+window("Mein Fenster", W, H);
+
+clear("#263238");
+
+// Rechteck zeichnen
+rect(50, 50, 100, 60, "#4fc3f7");
+
+// Kreis zeichnen
+circle(300, 100, 40, "#ef5350");
+
+// Text zeichnen
+text(200, 300, "Hallo Nexa!", 32, "white");
+
+present();
+
+print("Fenster geöffnet. Drücke Enter zum Beenden...");
+wait();
